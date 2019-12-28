@@ -42,3 +42,28 @@ class Case
         return y;
     }
 }
+
+class Grille
+{
+    private int player, ennemy, size;
+
+    public Grille()
+    {
+        //TODO
+    }
+
+    public int getPlayer()
+    {
+        return player;
+    }
+
+    public int getEnnemy()
+    {
+        return ennemy;
+    }
+
+    public int getSize()
+    {
+        return size;
+    }
+}
