@@ -49,7 +49,9 @@ class Grille
 
     public Grille()
     {
-        //TODO
+        for (int y = 0;y < size; y++)
+            for (int x = 0; x < size; x++)
+                grille.put("("+x+";"+y+")", new Case(x, y));
     }
 
     public int getPlayer()
