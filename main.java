@@ -24,7 +24,7 @@ class Player
 
 class Case
 {
-    private int x, y;
+    private int x, y, value;
 
     public Case(int x, int y)
     {
@@ -40,6 +40,16 @@ class Case
     public int getY()
     {
         return y;
+    }
+
+    public int getValue()
+    {
+        return value;
+    }
+
+    public void setValue(int value)
+    {
+        this.value = value;
     }
 }
 
@@ -80,6 +90,16 @@ class Grille
         return size;
     }
 
+    public void Play(int x, int y, int player)
+    {
+        grille.get("("+x+";"+y+")").setValue(player);
+    }
+
+    public void Cancel(int x, int y)
+    {
+        grille.get("("+x+";"+y+")").setValue(0);
+    }
+
     public boolean checkEnd()
     {
         for (int i = 0; i < getSize(); i++)
@@ -101,7 +121,7 @@ class Grille
                 player++;
         }
         if (ennemy == n)
-            return getEnemy();
+            return getEnnemy();
         if (player == n)
             return getPlayer();
         return 0;
@@ -117,9 +137,57 @@ class Grille
                 player++;
         }
         if (ennemy == n)
-            return getEnemy();
+            return getEnnemy();
         if (player == n)
             return getPlayer();
         return 0;
+    }
+}
+
+class Algo
+{
+    Grille grille;
+    private int max_value = -1000, x, y, depth;
+
+    public void Jouer(Grille grille)
+    {
+        this.grille = grille;
+        grille.Play(x, y, grille.getEnnemy());
+    }
+
+    private int Min(int depth)
+    {
+        int min_val = 1000;
+        for (String i : grille.Key())
+        {
+            if (grille.getCase(i).getValue() == 0)
+            {
+                int x = grille.getCase(i).getX(), y = grille.getCase(i).getY();
+                grille.Play(x, y, grille.getPlayer());
+                int val = Max(depth - 1);
+                if (val < min_val)
+                    min_val = val;
+                grille.Cancel(x, y);
+            }
+        }
+        return min_val;
+    }
+
+    private int Max(int depth)
+    {
+        int max_val = -1000;
+        for (String i : grille.Key())
+        {
+            if (grille.GetCase(i).GetVal() == 0)
+            {
+                int x = grille.getCase(i).getX(), y = grille.getCase(i).getY();
+                grille.Play(x, y, grille.Ennemy());
+                int val = Min(depth-1);
+                if (val > max_val)
+                    max_val = val;
+                grille.Cancel(x, y);
+            }
+        }
+        return max_val;
     }
 }
