@@ -7,6 +7,8 @@ class Player
     public static void main(String args[])
     {
         Scanner in = new Scanner(System.in);
+        Grille grille = new Grille();
+        Algo ennemy = new Algo();
         while (true)
         {
             int opponentRow = in.nextInt();
@@ -65,7 +67,7 @@ class Grille
                 grille.put("("+x+";"+y+")", new Case(x, y));
     }
 
-    public Set<String> getKey()
+    public Set<String> Key()
     {
         return grille.keySet();
     }
@@ -105,8 +107,8 @@ class Grille
         for (int i = 0; i < getSize(); i++)
             if (!(checkLine(i, 3)) || !(checkColumn(i, 3)))
                 return true;
-        for (String i : getKey())
-            if (getKey(i).getValue())
+        for (String i : Key())
+            if (Key(i).getValue())
                 return false;
         return true;
     }
