@@ -277,12 +277,13 @@ class Algo
             score += 2;
         else if (grille.checkDiago(2) == grille.getPlayer())
             score -= 2;
-        else score -= 1;
+        else
+            score -= 1;
 
         if (grille.checkDiago(2) == grille.getEnnemy())
-            score += 2;
+            score += 2000;
         else if (grille.checkDiago(2) == grille.getPlayer())
-            score -= 2;
+            score -= 1000;
         return score;
     }
 }
