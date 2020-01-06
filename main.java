@@ -1,8 +1,33 @@
 import java.util.*;
-import java.io.*;
-import java.math.*;
+//import java.io.*;
+//import java.math.*;
 
 class Player
+{
+    public static void main(String args[])
+    {
+        Scanner in = new Scanner(System.in);
+        Grille grille = new Grille();
+        Algo ennemy = new Algo();
+        // game loop
+        while (true)
+        {
+            int x = in.nextInt();
+            int y = in.nextInt();
+            int validActionCount = in.nextInt();
+            for (int i = 0; i < validActionCount; i++)
+            {
+                int row = in.nextInt();
+                int col = in.nextInt();
+            }
+            if (x != -1)
+                grille.Play(x, y, grille.getPlayer());
+            ennemy.Play(grille);
+        }
+    }
+}
+
+/*class Player
 {
     public static void main(String args[])
     {
@@ -15,15 +40,15 @@ class Player
             grille.myPrint();
             System.out.print("Entrez x et y : ");
             int x = in.nextInt();
-            int y = in nextInt();
-            grille.Play(x - 1, y - 1, grille.getPlayer());
+            int y = in.nextInt();
+            grille.Play(x, y, grille.getPlayer());
         }
     }
-}
+}*/
 
 class Case
 {
-    private int x, y, value;
+    private int x, y, value = 0;
 
     public Case(int x, int y)
     {
@@ -54,10 +79,10 @@ class Case
 
 class Grille
 {
-    private int player, ennemy, size;
+    private int player = 1, ennemy = 2, size = 3;
     private HashMap<String, Case> grille = new HashMap<String, Case>();
 
-    public Grille()
+    public Grille() //Rempli la grille d'une taille de 3x3
     {
         for (int y = 0;y < size; y++)
             for (int x = 0; x < size; x++)
@@ -116,10 +141,10 @@ class Grille
     public boolean checkEnd()
     {
         for (int i = 0; i < getSize(); i++)
-            if (!(checkLine(i, 3)) || !(checkColumn(i, 3)))
+       	if (checkLine(i, 3) != 0 || checkColumn(i, 3) != 0)
                 return true;
         for (String i : Key())
-            if (Key(i).getValue())
+        	if (getCase(i).getValue() == 0)
                 return false;
         return true;
     }
@@ -140,10 +165,10 @@ class Grille
         return 0;
     }
 
-    public int checkColumn(int y, int n)
+    public int checkColumn(int x, int n)
     {
         int ennemy = 0, player = 0;
-        for (int y = 0; x < getSize(); y++)
+        for (int y = 0; y < getSize(); y++)
         {
             int val = getCase("("+x+";"+y+")").getValue();
             if (val == getPlayer())
@@ -166,6 +191,7 @@ class Algo
     {
         this.grille = grille;
         grille.Play(x, y, grille.getEnnemy());
+        System.out.println(x+" "+y);
     }
 
     private int Min(int depth)
@@ -191,10 +217,10 @@ class Algo
         int max_val = -1000;
         for (String i : grille.Key())
         {
-            if (grille.GetCase(i).GetVal() == 0)
+            if (grille.getCase(i).getValue() == 0)
             {
                 int x = grille.getCase(i).getX(), y = grille.getCase(i).getY();
-                grille.Play(x, y, grille.Ennemy());
+                grille.Play(x, y, grille.getEnnemy());
                 int val = Min(depth-1);
                 if (val > max_val)
                     max_val = val;
