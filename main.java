@@ -9,17 +9,14 @@ class Player
         Scanner in = new Scanner(System.in);
         Grille grille = new Grille();
         Algo ennemy = new Algo();
-        while (true)
+        while (!grille.checkEnd())
         {
-            int opponentRow = in.nextInt();
-            int opponentCol = in.nextInt();
-            int validActionCount = in.nextInt();
-            for (int i = 0; i < validActionCount; i++)
-            {
-                int row = in.nextInt();
-                int col = in.nextInt();
-            }
-            System.out.println("0 0");
+            ennemy.Play(grille);
+            grille.myPrint();
+            System.out.print("Entrez x et y : ");
+            int x = in.nextInt();
+            int y = in nextInt();
+            grille.Play(x - 1, y - 1, grille.getPlayer());
         }
     }
 }
@@ -92,6 +89,20 @@ class Grille
         return size;
     }
 
+    public void myPrint()
+    {
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                int val = grille.get("("+x+";"+y+")").getValue();
+                System.out.print(val == 0 ? "." : val == getPlayer() ? "x" : "o");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
     public void Play(int x, int y, int player)
     {
         grille.get("("+x+";"+y+")").setValue(player);
@@ -151,7 +162,7 @@ class Algo
     Grille grille;
     private int max_value = -1000, x, y, depth;
 
-    public void Jouer(Grille grille)
+    public void Play(Grille grille)
     {
         this.grille = grille;
         grille.Play(x, y, grille.getEnnemy());
